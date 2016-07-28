@@ -36,7 +36,7 @@ php_stream *php_expect_stream_open (php_stream_wrapper *wrapper, char *command, 
 		zval *z_pid;
 		MAKE_STD_ZVAL (z_pid);
 		ZVAL_LONG (z_pid, exp_pid);
-		stream->wrapperdata = z_pid;
+		stream->wrapperdata = *z_pid;
 		return stream;
 	}
 	
@@ -45,11 +45,12 @@ php_stream *php_expect_stream_open (php_stream_wrapper *wrapper, char *command, 
 
 static int php_expect_stream_close (php_stream_wrapper *wrapper, php_stream *stream TSRMLS_DC)
 {
-	zval* z_pid = stream->wrapperdata;
+//	zval* z_pid = stream->wrapperdata;
 	int s = 0;
-	waitpid (Z_LVAL_P(z_pid), &s, 0);
-	zval_ptr_dtor (&z_pid);
-	stream->wrapperdata = NULL;
+//	waitpid (Z_LVAL_P(z_pid), &s, 0);
+//	zval_ptr_dtor (&z_pid);
+//	FREE_ZVAL(stream->wrapperdata);
+	//stream->wrapperdata = NULL;
 	return s;
 }
 /* }}} */
